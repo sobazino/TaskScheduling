@@ -1,4 +1,4 @@
-# TaskScheduling
+# CloudSim / TaskScheduling
 
 **<p align="center">Task scheduling in cloud environment</p>**
 
