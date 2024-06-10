@@ -335,7 +335,6 @@ public class DatacenterBroker extends SimEntity {
 	 * @post $none
 	 */
 	protected void submitCloudlets() {
-		// Arrange the list of n tasks based on SJF concept.
 		List <Cloudlet> SJF= new ArrayList<Cloudlet>();
 		ArrayList<Cloudlet> temp = new ArrayList<Cloudlet>();
 		for(Cloudlet cloudlet: getCloudletList())
@@ -362,39 +361,26 @@ public class DatacenterBroker extends SimEntity {
 			temp.add(cloudlet);
 		}
 		
-		// Put selected=0
 		int selected = 0;
 		int size = SJF.size();
-		// For i=1 to n
 		for(int i = 0; i < size; i++) {
 			Cloudlet selectedTask = null;
 			
-			// HSLJF PLUS+
 		 	if (selected == 0) {
-		 		// If (selected==0)
-		 		// Select a task from the top of the list
-		 		// Selected=1
 		 		selectedTask = SJF.remove(0);
 		 		selected = 1;
 		 	}
 		 	else if (selected == 1) {
-		 		// Select a task from the center of the list
 		 		selectedTask = SJF.remove((SJF.size() - 1) / 2);
 		 		selected = 2;
 		 	}
 		 	else {
-		 		// Else
-		 		// Select a task from the bottom of the list
-		 		// Selected=0
 		 		selectedTask = SJF.remove(SJF.size() - 1);
 		 		selected = 0;
 		 	}
-			
-		 	// End if
 		 	
 		 	Vm selectedVm = null;
 		 		 	
-		 	// For j=1 to m
 		 	double CT_VMs[] = new double[getVmsCreatedList().size()];
 		 	for(int j = 0; j < getVmsCreatedList().size(); j++) {
 		 		Vm vm = getVmsCreatedList().get(j);
@@ -409,7 +395,6 @@ public class DatacenterBroker extends SimEntity {
 		 		selectedVm = vm;
 		 	}
 		 	
-		 	// Get the VM with minimum completion time
 		 	double CT = CT_VMs[0];
 	        int minIndex = 0;
 	        for (int k = 0; k < CT_VMs.length; k++) {
@@ -420,9 +405,7 @@ public class DatacenterBroker extends SimEntity {
 	        }
 	        
 	        for (int n = 0; n < CT_VMs.length; n++) {
-	        	// If minimum completion time in two VMs is equal
             	if (CT_VMs[minIndex] == CT_VMs[n]) {
-            		// Select VM with largest MIPS
             		if (getVmsCreatedList().get(minIndex).getMips() > getVmsCreatedList().get(n).getMips()) {
             			selectedVm = getVmsCreatedList().get(minIndex);
             			CTM[i][minIndex] = CT;
@@ -440,15 +423,12 @@ public class DatacenterBroker extends SimEntity {
 	        TASK[i][0] = selectedTask.getCloudletId();
 	        TASK[i][1] = CT;
 	        
-		 	// End for.
-		 	// Assign the selected task into the VM with minimum completion time
 		 	Log.printLine(CloudSim.clock() + ": " + getName() + ": Sending cloudlet " + selectedTask.getCloudletId() + " to VM #" + selectedVm.getId());
 		 	selectedTask.setVmId(selectedVm.getId());
 		 	sendNow(getVmsToDatacentersMap().get(selectedVm.getId()), CloudSimTags.CLOUDLET_SUBMIT, selectedTask);
 			cloudletsSubmitted++;
 			getCloudletSubmittedList().add(selectedTask);
 		}
-		// End for.
 		for (Cloudlet cloudlet : getCloudletSubmittedList()) {
 			getCloudletList().remove(cloudlet);
 		}
