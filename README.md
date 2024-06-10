@@ -10,7 +10,7 @@
 
 </br>
 
-### Pseudocode
+### Pseudocode:
 
 ```
 1. Sort the list of n tasks using SJF.
@@ -35,7 +35,7 @@
 
 ---
 
-### Core
+### Core:
 
 [Constants.java](https://github.com/sobazino/TaskScheduling/blob/main/Project/SobaZino/Constants.java)
 </br>
@@ -43,8 +43,18 @@
 </br>
 [DatacenterBroker.java](https://github.com/sobazino/TaskScheduling/blob/main/sources/org/cloudbus/cloudsim/DatacenterBroker.java)
 
-### Dataset
+### Dataset:
 
 ```
 HPC2N-2002-2.2-cln
+```
+
+### Performance Metrics:
+
+```
+1. Average Makespan
+2. Mean of total average response time
+3. Actual Execution Time
+4. Average Resource Utilization
+5. Throughput
 ```
